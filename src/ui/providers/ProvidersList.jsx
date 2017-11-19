@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ProvidersTable from './ProvidersTable';
 import ProvidersListStore from './ProvidersListStore';
 import PoSActions from './../PoSActions';
@@ -41,7 +42,12 @@ class ProvidersList extends React.Component {
     return (
       <div className="container">
         <h1>Proveedores</h1>
+        <Link to={'/providers/create'} className={'btn btn-primary'}>
+          Nuevo proveedor
+        </Link>
 
+        <br />
+        <br />
         <ProvidersTable
           providers={this.state.providers}
           navCallback={this.navToPage}
