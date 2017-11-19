@@ -1,14 +1,53 @@
 import React from 'react';
-import PaginatedTable from './../components/paginated_table/PaginatedTable';
+import ProvidersTable from './ProvidersTable';
+import ProvidersListStore from './ProvidersListStore';
+import PoSActions from './../PoSActions';
 
 class ProvidersList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onChange = this.onChange.bind(this);
+    this.navToPage = this.navToPage.bind(this);
+
+    this.pageSize = 20;
+    this.state = ProvidersListStore.getState();
+  }
+
+  componentWillMount() {
+    ProvidersListStore.addChangeListener(this.onChange);
+  }
+
+  componentDidMount() {
+    PoSActions.provider.page(1, this.pageSize);
+  }
+
+  componentWillUnmount() {
+    ProvidersListStore.removeChangeListener(this.onChange);
+  }
+
+  onChange() {
+    // Pull state changes from store
+    this.setState(ProvidersListStore.getState());
+  }
+
+  navToPage(targetPage) {
+    PoSActions.provider.page(
+      targetPage,
+      this.pageSize,
+    );
+  }
 
   render() {
     return (
       <div className="container">
         <h1>Proveedores</h1>
 
-        <PaginatedTable />
+        <ProvidersTable
+          providers={this.state.providers}
+          navCallback={this.navToPage}
+          activePage={this.state.pageIdx}
+          totalPages={this.state.pagesCount}
+        />
       </div>
     );
   }
