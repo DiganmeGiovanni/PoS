@@ -2,13 +2,16 @@ import ActionTypes from './ActionTypes';
 import PosDispatcher from './PoSDispatcher';
 
 const PoSActions = {
-  provider: {
-    list() {
+  brands: {
+    page(pageNumber, pageSize) {
       PosDispatcher.dispatch({
-        type: ActionTypes.PROVIDERS.LIST,
+        type: ActionTypes.BRANDS.PAGE,
+        pageNumber,
+        pageSize,
       });
     },
-
+  },
+  provider: {
     page(pageNumber, pageSize) {
       PosDispatcher.dispatch({
         type: ActionTypes.PROVIDERS.PAGE,

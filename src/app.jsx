@@ -7,6 +7,7 @@ import {
 import ProvidersList from './ui/providers/ProvidersList';
 import ProvidersCreate from './ui/providers/ProvidersCreate';
 import BrandsList from './ui/brands/BrandsList';
+import BrandsCreate from './ui/brands/BrandsCreate';
 import Navbar from './ui/components/navbar/Navbar';
 
 export default class App extends React.Component {
@@ -17,7 +18,8 @@ export default class App extends React.Component {
           <Navbar />
 
           {/* Routes */}
-          <Route path={'/brands'} component={BrandsList} />
+          <Route exact path={'/brands'} component={BrandsList} />
+          <Route exact path={'/brands/create'} component={BrandsCreate} />
           <Route exact path={'/providers'} component={ProvidersList} />
           <Route exact path={'/providers/create'} component={ProvidersCreate} />
         </div>
