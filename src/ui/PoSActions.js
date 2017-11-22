@@ -20,6 +20,15 @@ const PoSActions = {
       });
     },
   },
+  productModels: {
+    page(pageNumber, pageSize) {
+      PosDispatcher.dispatch({
+        type: ActionTypes.PRODUCT_MODELS.PAGE,
+        pageNumber,
+        pageSize,
+      });
+    },
+  },
   provider: {
     page(pageNumber, pageSize) {
       PosDispatcher.dispatch({
