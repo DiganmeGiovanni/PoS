@@ -9,11 +9,21 @@ class DValidator {
    * @param input String to validate
    */
   static isName(input) {
-    DValidator.forceToString(input);
-    return validator.isLength(input, {
+    const sInput = DValidator.forceToString(input);
+    return validator.isLength(sInput, {
       min: 2,
       max: 100,
     });
+  }
+
+  /**
+   * Given input must be a non empty string
+   * @param input String to validate
+   * @returns {boolean} Validation result
+   */
+  static nonEmpty(input) {
+    const sInput = DValidator.forceToString(input);
+    return validator.isLength(sInput, { min: 1 });
   }
 
   static forceToString(input) {

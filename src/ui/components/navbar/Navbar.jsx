@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import {
+  NavDropdown,
+  MenuItem,
+} from 'react-bootstrap';
 
 class Navbar extends React.Component {
-
   render() {
     return (
       <nav className="navbar navbar-default">
@@ -28,12 +31,27 @@ class Navbar extends React.Component {
 
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav">
-              <li>
-                <Link to={'/brands'}>Marcas</Link>
-              </li>
-              <li className="active">
+              <li className={location.pathname === '/providers' ? 'active' : ''}>
                 <Link to="/providers">Proveedores</Link>
               </li>
+              <NavDropdown title="Inventario" id="nav-inventory">
+                <MenuItem
+                  componentClass={Link}
+                  href={'/brands'}
+                  to={'/brands'}
+                  active={location.pathname === '/brands'}
+                >
+                  Marcas
+                </MenuItem>
+                <MenuItem
+                  componentClass={Link}
+                  href={'/measurement_units'}
+                  to={'/measurement_units'}
+                  active={location.pathname === '/measurement_units'}
+                >
+                  Unidades de medida
+                </MenuItem>
+              </NavDropdown>
             </ul>
           </div>
         </div>

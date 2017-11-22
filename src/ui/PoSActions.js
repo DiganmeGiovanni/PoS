@@ -11,6 +11,15 @@ const PoSActions = {
       });
     },
   },
+  measurementUnits: {
+    page(pageNumber, pageSize) {
+      PosDispatcher.dispatch({
+        type: ActionTypes.MEASUREMENT_UNITS.PAGE,
+        pageNumber,
+        pageSize,
+      });
+    },
+  },
   provider: {
     page(pageNumber, pageSize) {
       PosDispatcher.dispatch({
