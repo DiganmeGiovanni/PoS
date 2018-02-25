@@ -5,3 +5,29 @@
 .cur-pointer {
     cursor: pointer;
 }
+
+
+/*****************************************************/
+/** Autosuggestion container */
+
+.react-autosuggest__suggestions-container--open {
+  background: #FAFAFA;
+  padding: 8px 0;
+  position: absolute;
+  width: calc(100% - 30px);
+  z-index: 1;
+}
+
+.react-autosuggest__suggestions-list {
+  list-style: none none;
+  padding: 0;
+}
+
+.suggestion-item {
+  cursor: pointer;
+  padding: 8px 16px;
+}
+
+.suggestion-item:hover {
+  background: #EEEEEE;
+}

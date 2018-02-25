@@ -15,7 +15,7 @@ const PModelsTable = ({ pModels, activePage, totalPages, navCallback }) => {
     }
 
     return pModels.map(pModel => (
-      <tr key={pModel.id}>
+      <tr key={`product-model-${ pModel.id }`}>
         <td>{pModel.id}</td>
         <td>{pModel.name}</td>
         <td>{pModel.brand.name}</td>

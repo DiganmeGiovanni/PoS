@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
 import PoSDispatcher from '../PoSDispatcher';
 import ActionTypes from '../ActionTypes';
-import { ProductModel } from '../../model/entities';
+import {Brand, ProductModel} from '../../model/entities';
 
 class PModelsListStore extends EventEmitter {
   constructor() {
@@ -32,6 +32,7 @@ class PModelsListStore extends EventEmitter {
     ProductModel.findAndCountAll({
       offset,
       limit: pageSize,
+      include: [ Brand ]
     }).then((result) => {
       this.activePage.pModels = result.rows;
       this.activePage.pageIdx = pageNumber;

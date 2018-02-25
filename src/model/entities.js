@@ -293,16 +293,16 @@ SalePrice.belongsTo(MeasurementUnit, { foreignKey: 'measurement_unit_id' });
 /**
  * Sync all models against database
  */
-Provider.sync();
-Brand.sync();
-Purchase.sync();
-MeasurementUnit.sync();
-Sale.sync();
-ProductModel.sync();
-PurchasePrice.sync();
-ProductExistence.sync();
-SalePrice.sync();
-SaleHasProduct.sync();
+// Provider.sync();
+// Brand.sync();
+// Purchase.sync();
+// MeasurementUnit.sync();
+// Sale.sync();
+// ProductModel.sync();
+// PurchasePrice.sync();
+// ProductExistence.sync();
+// SalePrice.sync();
+// SaleHasProduct.sync();
 
 
 export {
