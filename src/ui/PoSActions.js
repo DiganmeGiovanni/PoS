@@ -38,6 +38,14 @@ const PoSActions = {
       });
     },
   },
+  purchasePrices: {
+    fetchProductModel(pModelId) {
+      PosDispatcher.dispatch({
+        type: ActionTypes.PURCHASE_PRICES.FETCH_P_MODEL,
+        pModelId
+      });
+    }
+  }
 };
 
 export default PoSActions;

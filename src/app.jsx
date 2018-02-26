@@ -12,6 +12,7 @@ import PModelsList from './ui/p_models/PModelsList';
 import PModelsCreate from './ui/p_models/PModelsCreate';
 import ProvidersList from './ui/providers/ProvidersList';
 import ProvidersCreate from './ui/providers/ProvidersCreate';
+import PurchasePricesList from './ui/purchase_prices/PurchasePricesList';
 import Navbar from './ui/components/navbar/Navbar';
 
 export default class App extends React.Component {
@@ -28,6 +29,7 @@ export default class App extends React.Component {
           <Route exact path={'/measurement_units/create'} component={MUnitsCreate} />
           <Route exact path={'/p_models'} component={PModelsList} />
           <Route exact path={'/p_models/create'} component={PModelsCreate} />
+          <Route exact path={'/purchase_prices/:pModelId'} component={PurchasePricesList} />
           <Route exact path={'/providers'} component={ProvidersList} />
           <Route exact path={'/providers/create'} component={ProvidersCreate} />
         </div>

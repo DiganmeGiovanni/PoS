@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   NavDropdown,
+  NavItem,
   MenuItem,
 } from 'react-bootstrap';
 
@@ -61,6 +62,8 @@ class Navbar extends React.Component {
                   Unidades de medida
                 </MenuItem>
               </NavDropdown>
+              <NavItem>Compras</NavItem>
+              <NavItem>Ventas</NavItem>
             </ul>
           </div>
         </div>

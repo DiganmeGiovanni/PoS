@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Paginator from './../components/paginated_table/Paginator';
+import { Link } from "react-router-dom";
 
 const PModelsTable = ({ pModels, activePage, totalPages, navCallback }) => {
   const makeTableBody = () => {
@@ -22,6 +23,11 @@ const PModelsTable = ({ pModels, activePage, totalPages, navCallback }) => {
         <td>{pModel.description}</td>
         <td>0</td>
         <td>0</td>
+        <td>
+          <Link to={`/purchase_prices/${ pModel.id }`} title="Precios de compra">
+            <span className="glyphicon glyphicon-usd"/>
+          </Link>
+        </td>
       </tr>
     ));
   };
@@ -38,6 +44,7 @@ const PModelsTable = ({ pModels, activePage, totalPages, navCallback }) => {
               <th>Descripción</th>
               <th>Existencias</th>
               <th>Existencias minimas</th>
+              <th>&nbsp;</th>
             </tr>
           </thead>
           <tbody>{makeTableBody()}</tbody>
