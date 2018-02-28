@@ -16,6 +16,16 @@ class DValidator {
     });
   }
 
+  static isNumber(input) {
+    const sInput = DValidator.forceToString(input);
+    return validator.isNumeric(sInput);
+  }
+
+  static isInt(input) {
+    const sInput = DValidator.forceToString(input);
+    return validator.isInt(sInput);
+  }
+
   /**
    * Given input must be a non empty string
    * @param input String to validate

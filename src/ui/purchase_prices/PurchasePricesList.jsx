@@ -1,6 +1,7 @@
 import React from 'react';
 import PurchasePricesStore from "./PurchasePricesStore";
 import PoSActions from "../PoSActions";
+import { Link } from "react-router-dom";
 
 class PurchasePricesList extends React.Component {
   constructor(props) {
@@ -34,6 +35,11 @@ class PurchasePricesList extends React.Component {
         <h2 style={{ marginTop: '4px' }}>
           { this.state.pModel !== null ? this.state.pModel.name : '' }
         </h2>
+
+        <hr/>
+        <Link to={'/purchase_prices/:pModelId/create'} className={'btn btn-primary'}>
+          Registrar nuevo
+        </Link>
       </div>
     )
   }
