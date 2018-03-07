@@ -3,7 +3,8 @@ import FormGroup from "../components/form/FormGroup";
 import { Route } from "react-router-dom";
 import ProvidersAutosuggest from "../components/autosuggesters/ProvidersAutosuggest";
 import DValidator from "../../services/ValidatorService";
-const DatePicker = require('react-bootstrap-date-picker');
+import DatePickerInput from "react-day-picker/DayPickerInput";
+import moment from 'moment';
 
 class PurchasePricesForm extends React.Component {
   constructor(props) {
@@ -121,26 +122,13 @@ class PurchasePricesForm extends React.Component {
             <div className="col-sm-6">
               <div className={`form-group${ this.state.date.hasError ? 'has-error' : ''}`}>
                 <label htmlFor="inp-date" className="control-label">Fecha</label>
-                <DatePicker
-                  id="inp-date"
-                  value={ this.state.date.value }
-                  onChange={ this.onDateChange }
-                  dateFormat='YYYY-MM-DD'
-                  dayLabels={['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab']}
-                  monthLabels={[
-                    'Enero',
-                    'Febrero',
-                    'Marzo',
-                    'Abril',
-                    'Mayo',
-                    'Junio',
-                    'Julio',
-                    'Agosto',
-                    'Septiembre',
-                    'Octubre',
-                    'Noviembre',
-                    'Diciembre',
-                  ]}
+
+                <br/>
+                <DatePickerInput
+                  locale="es"
+                  inputProps={{
+                    className: 'form-control',
+                  }}
                 />
               </div>
             </div>

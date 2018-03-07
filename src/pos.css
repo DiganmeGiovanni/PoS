@@ -6,6 +6,10 @@
     cursor: pointer;
 }
 
+.DayPickerInput {
+  width: 100%;
+}
+
 
 /*****************************************************/
 /** Autosuggestion container */
