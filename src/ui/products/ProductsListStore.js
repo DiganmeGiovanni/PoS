@@ -1,15 +1,15 @@
 import { EventEmitter } from 'events';
 import PoSDispatcher from '../PoSDispatcher';
 import ActionTypes from '../ActionTypes';
-import {Brand, ProductModel} from '../../model/entities';
+import {Brand, MeasurementUnit, Product} from '../../model/entities';
 
-class PModelsListStore extends EventEmitter {
+class ProductsListStore extends EventEmitter {
   constructor() {
     super();
     this.CHANGE_EVENT = 'CHANGE';
 
     this.activePage = {
-      pModels: [],
+      products: [],
       pageIdx: 0,
       pagesCount: 0,
     };
@@ -29,12 +29,15 @@ class PModelsListStore extends EventEmitter {
 
   page(pageNumber, pageSize) {
     const offset = (pageNumber - 1) * pageSize;
-    ProductModel.findAndCountAll({
+    Product.findAndCountAll({
       offset,
       limit: pageSize,
-      include: [ Brand ]
+      include: [
+        Brand,
+        { model: MeasurementUnit, as: 'measurementUnit' }
+      ]
     }).then((result) => {
-      this.activePage.pModels = result.rows;
+      this.activePage.products = result.rows;
       this.activePage.pageIdx = pageNumber;
       this.activePage.pagesCount = Math.ceil(result.count / pageSize);
       this.emitChange();
@@ -46,10 +49,10 @@ class PModelsListStore extends EventEmitter {
   }
 }
 
-const storeInstance = new PModelsListStore();
+const storeInstance = new ProductsListStore();
 storeInstance.dispatchToken = PoSDispatcher.register((action) => {
   switch (action.type) {
-    case ActionTypes.PRODUCT_MODELS.PAGE:
+    case ActionTypes.PRODUCTS.PAGE:
       storeInstance.page(action.pageNumber, action.pageSize);
       break;
 

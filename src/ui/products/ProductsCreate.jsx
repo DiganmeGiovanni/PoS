@@ -1,21 +1,21 @@
 import React from 'react';
-import { ProductModel } from '../../model/entities';
-import PModelsForm from './PModelsForm';
+import { Product } from '../../model/entities';
+import ProductsForm from './ProductsForm';
 
-class PModelsCreate extends React.Component {
+class ProductsCreate extends React.Component {
   constructor(props) {
     super(props);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      pModel: ProductModel.build(),
+      product: Product.build(),
     };
   }
 
-  onSubmit(pModel, history) {
-    pModel.save().then(() => {
-      this.setState({ pModel });
-      history.push('/p_models')
+  onSubmit(product, history) {
+    product.save().then(() => {
+      this.setState({ product: product });
+      history.push('/products')
     });
   }
 
@@ -27,9 +27,9 @@ class PModelsCreate extends React.Component {
           <br />
           <br />
 
-          <PModelsForm
+          <ProductsForm
             onSubmit={this.onSubmit}
-            pModel={this.state.pModel}
+            product={this.state.product}
           />
         </div>
       </div>
@@ -37,4 +37,4 @@ class PModelsCreate extends React.Component {
   }
 }
 
-export default PModelsCreate;
+export default ProductsCreate;

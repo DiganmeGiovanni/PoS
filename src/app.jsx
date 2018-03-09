@@ -8,8 +8,8 @@ import BrandsList from './ui/brands/BrandsList';
 import BrandsCreate from './ui/brands/BrandsCreate';
 import MUnitsList from './ui/m_unit/MUnitsList';
 import MUnitsCreate from './ui/m_unit/MUnitsCreate';
-import PModelsList from './ui/p_models/PModelsList';
-import PModelsCreate from './ui/p_models/PModelsCreate';
+import ProductsList from './ui/products/ProductsList';
+import ProductsCreate from './ui/products/ProductsCreate';
 import ProvidersList from './ui/providers/ProvidersList';
 import ProvidersCreate from './ui/providers/ProvidersCreate';
 import PurchasePricesList from './ui/purchase_prices/PurchasePricesList';
@@ -28,8 +28,8 @@ export default class App extends React.Component {
           <Route exact path={'/brands/create'} component={BrandsCreate} />
           <Route exact path={'/measurement_units'} component={MUnitsList} />
           <Route exact path={'/measurement_units/create'} component={MUnitsCreate} />
-          <Route exact path={'/p_models'} component={PModelsList} />
-          <Route exact path={'/p_models/create'} component={PModelsCreate} />
+          <Route exact path={'/products'} component={ProductsList} />
+          <Route exact path={'/products/create'} component={ProductsCreate} />
           <Route exact path={'/purchase_prices/:pModelId'} component={PurchasePricesList} />
           <Route exact path={'/purchase_prices/:pModelId/create'} component={PurchasePricesCreate} />
           <Route exact path={'/providers'} component={ProvidersList} />

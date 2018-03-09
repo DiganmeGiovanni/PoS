@@ -304,7 +304,10 @@ Product.hasMany(PurchasePrice, { foreignKey: 'product_id' });
 Product.hasMany(Existence, { foreignKey: 'product_id' });
 Product.hasMany(SalePrice, { foreignKey: 'product_id' });
 Product.hasMany(Equivalence, { foreignKey: 'product_id' });
-Product.belongsTo(MeasurementUnit, { foreignKey: 'measurement_unit_id' });
+Product.belongsTo(MeasurementUnit, {
+  as: 'measurementUnit',
+  foreignKey: 'measurement_unit_id'
+});
 Product.belongsTo(Brand, { foreignKey: 'brand_id' });
 Purchase.hasMany(Existence, { foreignKey: 'purchase_id' });
 Existence.belongsTo(PurchasePrice, { foreignKey: 'purchase_price_id' });

@@ -20,10 +20,10 @@ const PoSActions = {
       });
     },
   },
-  productModels: {
+  products: {
     page(pageNumber, pageSize) {
       PosDispatcher.dispatch({
-        type: ActionTypes.PRODUCT_MODELS.PAGE,
+        type: ActionTypes.PRODUCTS.PAGE,
         pageNumber,
         pageSize,
       });

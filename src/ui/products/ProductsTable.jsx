@@ -3,28 +3,29 @@ import PropTypes from 'prop-types';
 import Paginator from './../components/paginated_table/Paginator';
 import { Link } from "react-router-dom";
 
-const PModelsTable = ({ pModels, activePage, totalPages, navCallback }) => {
+const ProductsTable = ({ products, activePage, totalPages, navCallback }) => {
   const makeTableBody = () => {
-    if (pModels.length === 0) {
+    if (products.length === 0) {
       return (
         <tr>
-          <td colSpan={6} className={'text-center'}>
+          <td colSpan={7} className={'text-center'}>
             <i>No hay productos para mostrar</i>
           </td>
         </tr>
       );
     }
 
-    return pModels.map(pModel => (
-      <tr key={`product-model-${ pModel.id }`}>
-        <td>{pModel.id}</td>
-        <td>{pModel.name}</td>
-        <td>{pModel.brand.name}</td>
-        <td>{pModel.description}</td>
+    return products.map(product => (
+      <tr key={`product-model-${ product.id }`}>
+        <td>{ product.id }</td>
+        <td>{ product.name }</td>
+        <td>{ product.brand.name }</td>
+        <td>{ product.measurementUnit.name }</td>
+        <td>{ product.description }</td>
         <td>0</td>
-        <td>0</td>
+        <td>{ product.minimalExistences }</td>
         <td>
-          <Link to={`/purchase_prices/${ pModel.id }`} title="Precios de compra">
+          <Link to={`/purchase_prices/${ product.id }`} title="Precios de compra">
             <span className="glyphicon glyphicon-usd"/>
           </Link>
         </td>
@@ -41,6 +42,7 @@ const PModelsTable = ({ pModels, activePage, totalPages, navCallback }) => {
               <th>#</th>
               <th>Nombre</th>
               <th>Marca</th>
+              <th>Unidad de medida</th>
               <th>Descripción</th>
               <th>Existencias</th>
               <th>Existencias minimas</th>
@@ -60,11 +62,11 @@ const PModelsTable = ({ pModels, activePage, totalPages, navCallback }) => {
   );
 };
 
-PModelsTable.propTypes = {
-  pModels: PropTypes.arrayOf(PropTypes.object).isRequired,
+ProductsTable.propTypes = {
+  products: PropTypes.arrayOf(PropTypes.object).isRequired,
   activePage: PropTypes.number.isRequired,
   totalPages: PropTypes.number.isRequired,
   navCallback: PropTypes.func.isRequired,
 };
 
-export default PModelsTable;
+export default ProductsTable;

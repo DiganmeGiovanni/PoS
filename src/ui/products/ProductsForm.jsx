@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
-import { ProductModel } from '../../model/entities';
 import FormGroup from '../components/form/FormGroup';
 import BrandsAutosuggest from '../components/autosuggesters/BrandsAutosuggest'
 import DValidator from "../../services/ValidatorService";
+import MeasurementUnitAutosuggest from "../components/autosuggesters/MeasurementUnitAutosuggest";
 
-class PModelsForm extends React.Component {
+class ProductsForm extends React.Component {
   constructor(props) {
     super(props);
     this.renderDescError = this.renderDescError.bind(this);
@@ -14,11 +14,17 @@ class PModelsForm extends React.Component {
 
     this.onBrandChange = this.onBrandChange.bind(this);
     this.onDescriptionChange = this.onDescriptionChange.bind(this);
+    this.onMeasurementUnitChange = this.onMeasurementUnitChange.bind(this);
     this.onMinExistencesChange = this.onMinExistencesChange.bind(this);
     this.onNameChange = this.onNameChange.bind(this);
 
     this.state = {
       brand: {
+        errMessage: null,
+        hasError: false,
+        value: null
+      },
+      measurementUnit: {
         errMessage: null,
         hasError: false,
         value: null
@@ -34,7 +40,7 @@ class PModelsForm extends React.Component {
       },
       minExistences: {
         hasError: false,
-        value: '',
+        value: '1',
       },
     };
   }
@@ -48,6 +54,14 @@ class PModelsForm extends React.Component {
   onDescriptionChange(evt) {
     this.setState({
       description: { value: evt.target.value },
+    });
+  }
+
+  onMeasurementUnitChange(evt, { suggestion }) {
+    console.log('Measurement unit selected:');
+    console.log(suggestion.id);
+    this.setState({
+      measurementUnit: { value: suggestion }
     });
   }
 
@@ -66,12 +80,13 @@ class PModelsForm extends React.Component {
   onSubmitClicked(evt, history) {
     evt.preventDefault();
     if (this.validate()) {
-      const pModel = this.props.pModel;
-      pModel.name = this.state.name.value;
-      pModel.description = this.state.description.value;
-      pModel.brandId = this.state.brand.value.id;
+      const product = this.props.product;
+      product.name = this.state.name.value;
+      product.description = this.state.description.value;
+      product.brandId = this.state.brand.value.id;
+      product.measurementUnitId = this.state.measurementUnit.value.id;
 
-      this.props.onSubmit(pModel, history);
+      this.props.onSubmit(product, history);
     }
   }
 
@@ -110,6 +125,16 @@ class PModelsForm extends React.Component {
       });
     }
 
+    if (this.state.measurementUnit.value === null) {
+      formOk = false;
+      this.setState({
+        measurementUnit: {
+          hasError: true,
+          errMessage: 'Indique la unidad de media basica'
+        }
+      });
+    }
+
     return formOk;
   }
 
@@ -122,6 +147,12 @@ class PModelsForm extends React.Component {
               <BrandsAutosuggest
                 onBrandSelected={ this.onBrandChange }
                 errMessage={ this.state.brand.errMessage }
+              />
+            </div>
+            <div className="col-sm-6">
+              <MeasurementUnitAutosuggest
+                onSuggestionSelected={ this.onMeasurementUnitChange }
+                errMessage={ this.state.measurementUnit.errMessage }
               />
             </div>
           </div>
@@ -173,9 +204,9 @@ class PModelsForm extends React.Component {
   }
 }
 
-PModelsForm.propTypes = {
+ProductsForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   // pModel: PropTypes.objectOf(ProductModel).isRequired,
 };
 
-export default PModelsForm;
+export default ProductsForm;

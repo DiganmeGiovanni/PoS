@@ -1,38 +1,38 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PModelsTable from './PModelsTable';
-import PModelsListStore from './PModelsListStore';
+import ProductsTable from './ProductsTable';
+import ProductsListStore from './ProductsListStore';
 import PoSActions from './../PoSActions';
 
-class PModelsList extends React.Component {
+class ProductsList extends React.Component {
   constructor(props) {
     super(props);
     this.onChange = this.onChange.bind(this);
     this.navToPage = this.navToPage.bind(this);
 
     this.pageSize = 20;
-    this.state = PModelsListStore.getState();
+    this.state = ProductsListStore.getState();
   }
 
   componentWillMount() {
-    PModelsListStore.addChangeListener(this.onChange);
+    ProductsListStore.addChangeListener(this.onChange);
   }
 
   componentDidMount() {
-    PoSActions.productModels.page(1, this.pageSize);
+    PoSActions.products.page(1, this.pageSize);
   }
 
   componentWillUnmount() {
-    PModelsListStore.removeChangeListener(this.onChange);
+    ProductsListStore.removeChangeListener(this.onChange);
   }
 
   onChange() {
     // Pull state changes from store
-    this.setState(PModelsListStore.getState());
+    this.setState(ProductsListStore.getState());
   }
 
   navToPage(targetPage) {
-    PoSActions.productModels.page(
+    PoSActions.products.page(
       targetPage,
       this.pageSize,
     );
@@ -42,14 +42,14 @@ class PModelsList extends React.Component {
     return (
       <div className="container">
         <h1>Productos</h1>
-        <Link to={'/p_models/create'} className={'btn btn-primary'}>
+        <Link to={'/products/create'} className={'btn btn-primary'}>
           Nuevo producto
         </Link>
 
         <br />
         <br />
-        <PModelsTable
-          pModels={this.state.pModels}
+        <ProductsTable
+          products={this.state.products}
           navCallback={this.navToPage}
           activePage={this.state.pageIdx}
           totalPages={this.state.pagesCount}
@@ -59,4 +59,4 @@ class PModelsList extends React.Component {
   }
 }
 
-export default PModelsList;
+export default ProductsList;

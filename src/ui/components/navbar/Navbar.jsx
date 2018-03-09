@@ -38,9 +38,9 @@ class Navbar extends React.Component {
               <NavDropdown title="Inventario" id="nav-inventory">
                 <MenuItem
                   componentClass={Link}
-                  href={'/p_models'}
-                  to={'/p_models'}
-                  active={location.pathname === '/p_models'}
+                  href={'/products'}
+                  to={'/products'}
+                  active={location.pathname === '/products'}
                 >
                   Productos
                 </MenuItem>
