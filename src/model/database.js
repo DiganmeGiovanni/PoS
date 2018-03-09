@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('post_db', 'root', 'root', {
+const sequelize = new Sequelize('pos_db', 'root', 'root', {
   host: 'localhost',
   dialect: 'sqlite',
   operatorsAliases: false,
@@ -10,10 +10,10 @@ const sequelize = new Sequelize('post_db', 'root', 'root', {
     idle: 10000,
   },
 
-  storage: `${__dirname}database.sqlite`,
+  storage: `${__dirname}pos_db.sqlite`,
   define: {
     freezeTableName: true,
-    timestamps: false,
+    timestamps: true,
   },
 });
 
