@@ -62,7 +62,12 @@ class Navbar extends React.Component {
                   Unidades de medida
                 </MenuItem>
               </NavDropdown>
-              <NavItem>Compras</NavItem>
+              <NavItem
+                componentClass={ Link }
+                href={'/purchases'}
+                to={'/purchases'}
+                active={location.pathname === '/purchases'}
+              >Compras</NavItem>
               <NavItem>Ventas</NavItem>
             </ul>
           </div>
