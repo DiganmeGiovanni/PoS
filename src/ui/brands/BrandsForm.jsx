@@ -87,7 +87,7 @@ class BrandsForm extends React.Component {
 
 BrandsForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  brand: PropTypes.objectOf(Brand).isRequired,
+  // brand: PropTypes.objectOf(Brand).isRequired,
 };
 
 export default BrandsForm;
