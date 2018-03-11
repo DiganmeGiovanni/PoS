@@ -17,6 +17,7 @@ class ProductsForm extends React.Component {
     this.onMeasurementUnitChange = this.onMeasurementUnitChange.bind(this);
     this.onMinExistencesChange = this.onMinExistencesChange.bind(this);
     this.onNameChange = this.onNameChange.bind(this);
+    this.onCodeChange = this.onCodeChange.bind(this);
 
     this.state = {
       brand: {
@@ -30,6 +31,12 @@ class ProductsForm extends React.Component {
         value: null
       },
       name: {
+        errMessage: null,
+        hasError: false,
+        value: '',
+      },
+      code: {
+        errMessage: null,
         hasError: false,
         value: '',
       },
@@ -77,11 +84,18 @@ class ProductsForm extends React.Component {
     });
   }
 
+  onCodeChange(evt) {
+    this.setState({
+      code: { value: evt.target.value }
+    });
+  }
+
   onSubmitClicked(evt, history) {
     evt.preventDefault();
     if (this.validate()) {
       const product = this.props.product;
       product.name = this.state.name.value;
+      product.code = this.state.code.value;
       product.description = this.state.description.value;
       product.brandId = this.state.brand.value.id;
       product.measurementUnitId = this.state.measurementUnit.value.id;
@@ -113,6 +127,15 @@ class ProductsForm extends React.Component {
           errMessage: 'Ingrese un nombre valido'
         }
       });
+    }
+    if (!DValidator.isName(this.state.code.value)) {
+      formOk = false;
+      this.setState({
+        code: {
+          hasError: true,
+          errMessage: 'Ingrese un código para el producto'
+        }
+      })
     }
 
     if (this.state.brand.value === null) {
@@ -166,6 +189,17 @@ class ProductsForm extends React.Component {
                 errMessage={this.state.name.errMessage}
               />
             </div>
+            <div className="col-sm-6">
+              <FormGroup
+                label={'Código'}
+                name={'name'}
+                type={'text'}
+                handleChange={this.onCodeChange}
+                errMessage={this.state.code.errMessage}
+              />
+            </div>
+          </div>
+          <div className="row">
             <div className="col-sm-6">
               <FormGroup
                 label={'Existencias minimas'}

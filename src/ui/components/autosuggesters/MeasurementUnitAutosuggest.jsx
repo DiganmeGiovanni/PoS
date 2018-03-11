@@ -39,7 +39,7 @@ class MeasurementUnitAutosuggest extends React.Component {
   render() {
     return (
       <FGAutosuggest
-        label="Marca"
+        label="Unidad de medida"
         errMessage={ this.props.errMessage }
         suggestions={ this.state.suggestions }
         onSugFetchRequested={ this.onSuggestionsFetchRequested }

@@ -17,11 +17,10 @@ const ProductsTable = ({ products, activePage, totalPages, navCallback }) => {
 
     return products.map(product => (
       <tr key={`product-model-${ product.id }`}>
-        <td>{ product.id }</td>
+        <td>{ product.code }</td>
         <td>{ product.name }</td>
         <td>{ product.brand.name }</td>
         <td>{ product.measurementUnit.name }</td>
-        <td>{ product.description }</td>
         <td>0</td>
         <td>{ product.minimalExistences }</td>
         <td>
@@ -36,16 +35,15 @@ const ProductsTable = ({ products, activePage, totalPages, navCallback }) => {
   return (
     <div className="row">
       <div className="col-xs-12">
-        <table className="table table-bordered table-striped">
+        <table className="table table-striped">
           <thead>
             <tr>
-              <th>#</th>
+              <th>Código</th>
               <th>Nombre</th>
               <th>Marca</th>
               <th>Unidad de medida</th>
-              <th>Descripción</th>
-              <th>Existencias</th>
-              <th>Existencias minimas</th>
+              <th>Stock</th>
+              <th>Stock mínimo</th>
               <th>&nbsp;</th>
             </tr>
           </thead>
