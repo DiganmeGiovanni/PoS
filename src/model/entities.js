@@ -65,19 +65,6 @@ const MeasurementUnit = sequelize.define('measurement_unit', {
 });
 
 // noinspection JSUnresolvedVariable, JSUnresolvedFunction
-const Sale = sequelize.define('sale', {
-  id: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-  total: {
-    type: Sequelize.DECIMAL(13, 2),
-    allowNull: false,
-  },
-});
-
-// noinspection JSUnresolvedVariable, JSUnresolvedFunction
 const Product = sequelize.define('product', {
   id: {
     type: Sequelize.INTEGER,
@@ -85,6 +72,11 @@ const Product = sequelize.define('product', {
     primaryKey: true,
   },
   name: {
+    type: Sequelize.STRING,
+    unique: true,
+    allowNull: false,
+  },
+  code: {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false,
@@ -234,6 +226,24 @@ const Existence = sequelize.define('existence', {
 });
 
 // noinspection JSUnresolvedVariable, JSUnresolvedFunction
+const Sale = sequelize.define('sale', {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  selfConsumption: {
+    field: 'self_consumption',
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
+  total: {
+    type: Sequelize.DECIMAL(13, 2),
+    allowNull: false,
+  },
+});
+
+// noinspection JSUnresolvedVariable, JSUnresolvedFunction
 const SalePrice = sequelize.define('sale_price', {
   id: {
     type: Sequelize.INTEGER,
@@ -321,17 +331,17 @@ SalePrice.belongsTo(Product, { foreignKey: 'product_id' });
 
 
 // Sync all models against database
-// Provider.sync();
-// Brand.sync();
-// Purchase.sync();
-// MeasurementUnit.sync();
-// Sale.sync();
-// Product.sync();
-// Equivalence.sync();
-// PurchasePrice.sync();
-// Existence.sync();
-// SalePrice.sync();
-// SaleHasExistence.sync();
+Provider.sync();
+Brand.sync();
+Purchase.sync();
+MeasurementUnit.sync();
+Product.sync();
+Equivalence.sync();
+PurchasePrice.sync();
+Existence.sync();
+Sale.sync();
+SalePrice.sync();
+SaleHasExistence.sync();
 
 export {
   Provider,
