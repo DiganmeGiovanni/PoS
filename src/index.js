@@ -15,9 +15,13 @@ const createWindow = async () => {
   mainWindow = new BrowserWindow({
     width: 992,
     height: 600,
+    webPreferences: {
+      zoomFactor: 1.1
+    }
   });
 
   // and load the index.html of the app.
+  mainWindow.setMenu(null);
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
   // Open the DevTools.

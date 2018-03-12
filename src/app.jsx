@@ -26,18 +26,78 @@ export default class App extends React.Component {
           <Navbar />
 
           {/* Routes */}
-          <Route exact path={'/brands'} component={BrandsList} />
-          <Route exact path={'/brands/create'} component={BrandsCreate} />
-          <Route exact path={'/measurement_units'} component={MUnitsList} />
-          <Route exact path={'/measurement_units/create'} component={MUnitsCreate} />
-          <Route exact path={'/products'} component={ProductsList} />
-          <Route exact path={'/products/create'} component={ProductsCreate} />
-          <Route exact path={'/purchase_prices/:pModelId'} component={PurchasePricesList} />
-          <Route exact path={'/purchase_prices/:pModelId/create'} component={PurchasePricesCreate} />
-          <Route exact path={'/providers'} component={ProvidersList} />
-          <Route exact path={'/providers/create'} component={ProvidersCreate} />
-          <Route exact path={'/purchases'} component={PurchasesList} />
-          <Route exact path={'/purchases/create'} component={PurchasesCreate} />
+          <Route
+            exact
+            path={'/brands'}
+            component={BrandsList}
+            data={{ title: 'Punto de venta' }}
+          />
+          <Route
+            exact
+            path={'/brands/create'}
+            component={BrandsCreate}
+            data={{ title: 'Punto de venta' }}
+          />
+          <Route
+            exact
+            path={'/measurement_units'}
+            component={MUnitsList}
+            data={{ title: 'Punto de venta' }}
+          />
+          <Route
+            exact
+            path={'/measurement_units/create'}
+            component={MUnitsCreate}
+            data={{ title: 'Punto de venta' }}
+          />
+          <Route
+            exact
+            path={'/products'}
+            component={ProductsList}
+            data={{ title: 'Punto de venta' }}
+          />
+          <Route
+            exact
+            path={'/products/create'}
+            component={ProductsCreate}
+            data={{ title: 'Punto de venta' }}
+          />
+          <Route
+            exact
+            path={'/purchase_prices/:pModelId'}
+            component={PurchasePricesList}
+            data={{ title: 'Punto de venta' }}
+          />
+          <Route
+            exact
+            path={'/purchase_prices/:pModelId/create'}
+            component={PurchasePricesCreate}
+            data={{ title: 'Punto de venta' }}
+          />
+          <Route
+            exact
+            path={'/providers'}
+            component={ProvidersList}
+            data={{ title: 'Punto de venta' }}
+          />
+          <Route
+            exact
+            path={'/providers/create'}
+            component={ProvidersCreate}
+            data={{ title: 'Punto de venta' }}
+          />
+          <Route
+            exact
+            path={'/purchases'}
+            component={PurchasesList}
+            data={{ title: 'Punto de venta' }}
+          />
+          <Route
+            exact
+            path={'/purchases/create'}
+            component={PurchasesCreate}
+            data={{ title: 'Punto de venta' }}
+          />
         </div>
       </Router>
     );

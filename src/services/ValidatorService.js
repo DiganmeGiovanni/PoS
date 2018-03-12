@@ -18,7 +18,7 @@ class DValidator {
 
   static isNumber(input) {
     const sInput = DValidator.forceToString(input);
-    return validator.isNumeric(sInput);
+    return this.nonEmpty(sInput) && validator.isDecimal(sInput);
   }
 
   static isInt(input) {

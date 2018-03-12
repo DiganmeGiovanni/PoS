@@ -1,22 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const FormGroup = ({ label, id, name, type, errMessage, handleChange }) => {
+const FormGroup = ({ label, id, name, type, errMessage, handleChange, inpProps }) => {
   let inpId = id;
   if (id !== null) {
     inpId = `inp-${name}`;
   }
 
   const lbl = <label className={'control-label'} htmlFor="inpId">{label}</label>;
-  const inp = (
-    <input
-      id={inpId}
-      name={name}
-      type={type}
-      className={'form-control'}
-      onChange={handleChange}
-    />
-  );
+  const inp = <input
+        id={inpId}
+        name={name}
+        type={type}
+        className={'form-control'}
+        onChange={handleChange}
+        { ...inpProps }
+      />;
   const helpBlock = errMessage !== null
     ? <span className={'help-block'}>{errMessage}</span>
     : null;
@@ -38,6 +37,7 @@ FormGroup.propTypes = {
   id: PropTypes.string,
   errMessage: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
+  value: PropTypes.string,
 };
 
 FormGroup.defaultProps = {

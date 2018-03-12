@@ -38,6 +38,32 @@ const PoSActions = {
       });
     },
   },
+  purchase: {
+    create: {
+      addProduct(product, provider, quantity, cost, price) {
+        PosDispatcher.dispatch({
+          type: ActionTypes.PURCHASE.ADD_CONTENT,
+          product,
+          provider,
+          quantity,
+          cost,
+          price
+        });
+      },
+      changePaymentReinvestment(amount) {
+        PosDispatcher.dispatch({
+          type: ActionTypes.PURCHASE.CHANGE_PAYMENT_AS_REINVESTMENT,
+          amount: amount
+        });
+      },
+      changePaymentInvestment(amount) {
+        PosDispatcher.dispatch({
+          type: ActionTypes.PURCHASE.CHANGE_PAYMENT_AS_INVESTMENT,
+          amount: amount
+        });
+      }
+    }
+  },
   purchasePrices: {
     fetchProductModel(pModelId) {
       PosDispatcher.dispatch({
