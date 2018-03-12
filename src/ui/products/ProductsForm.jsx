@@ -96,6 +96,7 @@ class ProductsForm extends React.Component {
       const product = this.props.product;
       product.name = this.state.name.value;
       product.code = this.state.code.value;
+      product.minimalExistences = this.state.minExistences.value;
       product.description = this.state.description.value;
       product.brandId = this.state.brand.value.id;
       product.measurementUnitId = this.state.measurementUnit.value.id;
