@@ -5,12 +5,14 @@ import PoSActions from "../PoSActions";
 import PurchaseCreateStore from './PurchaseCreateStore';
 import FormGroup from "../components/form/FormGroup";
 import TextFormatter from "../../services/TextFormatter";
+import MonthYearForm from "../components/form/MonthYearForm";
 
 
 class PurchasesCreate extends React.Component {
   constructor(props) {
     super(props);
     this.onChange = this.onChange.bind(this);
+    this.handleYearMonthChange = this.handleYearMonthChange.bind(this);
 
     this.state = PurchaseCreateStore.getState();
   }
@@ -37,6 +39,10 @@ class PurchasesCreate extends React.Component {
       cost,
       price
     );
+  }
+
+  handleYearMonthChange(yMonthDate) {
+    console.log('Year and month has change');
   }
 
   // noinspection JSMethodCanBeStatic
@@ -106,6 +112,15 @@ class PurchasesCreate extends React.Component {
                     locale="es"
                     inputProps={{
                       className: 'form-control',
+                    }}
+                    dayPickerProps={{
+                      captionElement: ({ date, localeUtils }) => (
+                        <MonthYearForm
+                        date={ date }
+                        localeUtils={ localeUtils }
+                        onChange={ this.handleYearMonthChange }
+                        />
+                      )
                     }}
                   />
                 </div>
