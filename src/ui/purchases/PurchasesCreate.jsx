@@ -1,18 +1,18 @@
 import React from 'react';
-import DatePickerInput from "react-day-picker/DayPickerInput";
 import PurchaseProductForm from "./PurchaseProductForm";
 import PoSActions from "../PoSActions";
 import PurchaseCreateStore from './PurchaseCreateStore';
 import FormGroup from "../components/form/FormGroup";
-import TextFormatter from "../../services/TextFormatter";
-import MonthYearForm from "../components/form/MonthYearForm";
+import PurchaseContents from "./form/PurchaseContents"
+
+const DatePicker = require('react-datetime');
+import "moment/locale/es";
 
 
 class PurchasesCreate extends React.Component {
   constructor(props) {
     super(props);
     this.onChange = this.onChange.bind(this);
-    this.handleYearMonthChange = this.handleYearMonthChange.bind(this);
 
     this.state = PurchaseCreateStore.getState();
   }
@@ -41,57 +41,33 @@ class PurchasesCreate extends React.Component {
     );
   }
 
-  handleYearMonthChange(yMonthDate) {
-    console.log('Year and month has change');
+  // noinspection JSMethodCanBeStatic
+  handleDateChange(moment) {
+    PoSActions.purchase.create.changeDate(moment.toDate());
   }
 
   // noinspection JSMethodCanBeStatic
   onPaymentInvestmentChange(e) {
     PoSActions.purchase
       .create
-      .changePaymentInvestment(e.target.value);
+      .changePaymentInvestment(e.target.value * 1);
   }
 
   // noinspection JSMethodCanBeStatic
   onPaymentReinvestmentChange(e) {
     PoSActions.purchase
     .create
-    .changePaymentReinvestment(e.target.value);
+    .changePaymentReinvestment(e.target.value * 1);
   }
 
-  renderContents() {
-    if (this.state.contents.length === 0) {
-      return (
-        <tr>
-          <td colSpan="7" className="text-center">
-            <i>Sin productos</i>
-          </td>
-        </tr>
-      );
-    } else {
-      return this.state.contents.map((inOrder, idx) => {
-        return (
-          <tr key={`in_order-${ idx }`}>
-            <td>{ inOrder.provider.name }</td>
-            <td>{ inOrder.product.name }</td>
-            <td>{ inOrder.quantity }</td>
-            <td>Pieza</td>
-            <td className="text-right">
-              { TextFormatter.asMoney(inOrder.price) }
-            </td>
-            <td className="text-right">
-              { TextFormatter.asMoney(inOrder.cost) }
-            </td>
-            <td className="text-right">
-              { TextFormatter.asMoney(inOrder.cost * inOrder.quantity) }
-            </td>
-          </tr>
-        );
-      })
-    }
+  // noinspection JSMethodCanBeStatic
+  onSaveClicked(e) {
+    e.preventDefault();
+    PoSActions.purchase.create.save();
   }
 
   render() {
+    // noinspection JSUnusedGlobalSymbols
     return (
       <div className="container">
         <h1>Registrar compra</h1>
@@ -104,25 +80,18 @@ class PurchasesCreate extends React.Component {
             <div className="row">
               <div className="col-md-4">
                 <div className="form-group">
-                  <label htmlFor="inp-date"
-                         className="control-label"
-                  >Fecha</label>
+                  <label className="control-label">Fecha</label>
                   <br/>
-                  <DatePickerInput
-                    locale="es"
-                    inputProps={{
-                      className: 'form-control',
-                    }}
-                    dayPickerProps={{
-                      captionElement: ({ date, localeUtils }) => (
-                        <MonthYearForm
-                        date={ date }
-                        localeUtils={ localeUtils }
-                        onChange={ this.handleYearMonthChange }
-                        />
-                      )
-                    }}
-                  />
+                    <DatePicker
+                      dateFormat="DD MMMM, YYYY"
+                      timeFormat={ false }
+                      locale="es"
+                      viewMode="years"
+                      closeOnSelect={ true }
+                      closeOnTab={ true }
+                      onChange={ this.handleDateChange }
+                      value={ this.state.date }
+                    />
                 </div>
               </div>
               
@@ -132,6 +101,8 @@ class PurchasesCreate extends React.Component {
                   name="payment_investment"
                   type="text"
                   handleChange={ this.onPaymentInvestmentChange }
+                  value={ `${this.state.paymentInvestment}` }
+                  errMessage={ this.state.validationErrors.paymentInvestment }
                 />
               </div>
 
@@ -141,6 +112,7 @@ class PurchasesCreate extends React.Component {
                   name="payment_reinvestment"
                   type="text"
                   handleChange={ this.onPaymentReinvestmentChange }
+                  value={ `${this.state.paymentReinvestment}` }
                 />
               </div>
             </div>
@@ -148,57 +120,25 @@ class PurchasesCreate extends React.Component {
         </div>
         <div className="row">
           <div className="col-md-4">
-            <div className="panel panel-default">
-              <div className="panel-heading">
-                <h4 className="panel-title">Agregar producto</h4>
-              </div>
-              <div className="panel-body">
-                <PurchaseProductForm addProduct={ this.addProduct }/>
-              </div>
-            </div>
+            <PurchaseProductForm addProduct={ this.addProduct }/>
           </div>
 
           <div className="col-md-8">
-            <div className="panel panel-default">
-              <div className="panel-heading">
-                <h4 className="panel-title">Productos en la compra</h4>
-              </div>
-              <div className="panel-body">
-                <table className="table table-striped">
-                  <thead>
-                  <tr>
-                    <th>Proveedor</th>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Unidad</th>
-                    <th>Precio</th>
-                    <th>Costo C/U</th>
-                    <th>Costo</th>
-                  </tr>
-                  </thead>
-                  <tbody>{ this.renderContents() }</tbody>
-                  <tfoot>
-                  <tr>
-                    <td/>
-                    <td/>
-                    <td/>
-                    <td/>
-                    <td/>
-                    <td/>
-                    <td className="text-right text-bold">
-                      <b>{ TextFormatter.asMoney(this.state.totalCost) }</b>
-                    </td>
-                  </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </div>
+            <PurchaseContents
+              contents={ this.state.contents }
+              totalCost={ this.state.totalCost }
+              errMessage={ this.state.validationErrors.contents }
+            />
           </div>
         </div>
         <div className="row">
           <div className="col-xs-12 text-center padding-bottom-64">
             <hr/>
-            <button className="btn btn-success">
+            <button
+              className="btn btn-success"
+              onClick={ this.onSaveClicked }
+              type="button"
+            >
               <span>Crear compra</span>
             </button>
           </div>

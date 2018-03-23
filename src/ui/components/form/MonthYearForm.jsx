@@ -1,8 +1,10 @@
 import React from 'react';
+import moment from "moment";
+import "moment/locale/es";
 
 const MonthYearForm = ({ date, localeUtils, onChange }) => {
 
-  const months = localeUtils.getMonths();
+  const months = moment.months('es');
   const years = [];
 
   const currYear = new Date().getFullYear();
@@ -15,13 +17,14 @@ const MonthYearForm = ({ date, localeUtils, onChange }) => {
     onChange(new Date(year.value, month.value));
   };
 
+  console.log('Rendering month year form');
   return (
     <form className="DayPicker-Caption">
       <div className="select-container">
         <select name="month" onChange={ handleChange } value={ date.getMonth() }>
           { months.map((month, i) => (
             <option key={ month } value={ i }>
-              { month }
+              { `${ month.charAt(0).toUpperCase() }${ month.slice(1) }` }
             </option>
           ))}
         </select>

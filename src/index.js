@@ -13,15 +13,15 @@ if (isDevMode) enableLiveReload({ strategy: 'react-hmr' });
 const createWindow = async () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 992,
-    height: 600,
-    // webPreferences: {
-    //   // zoomFactor: 1
-    // }
+    width: 1150,
+    height: 864,
+    webPreferences: {
+      zoomFactor: 1.25
+    }
   });
 
   // and load the index.html of the app.
-  // mainWindow.setMenu(null);
+  mainWindow.setMenu(null);
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
   // Open the DevTools.

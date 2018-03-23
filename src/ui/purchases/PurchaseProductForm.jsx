@@ -186,88 +186,93 @@ class PurchaseProductForm extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className="row">
-          <div className="col-sm-4 col-md-12">
-            <ProductAutosuggest
-              onProductSelected={ this.onProductChange }
-              errMessage={ this.state.product.errMessage }
-            />
-          </div>
-          <div className="col-sm-4 col-md-12">
-            <FormGroup
-              label="Cantidad"
-              name="quantity"
-              type="text"
-              handleChange={ this.onQuantityChange }
-              errMessage={ this.state.quantity.errMessage }
-              inpProps={{
-                value: this.state.quantity.value
-              }}
-            />
-          </div>
-          <div className="col-sm-4 col-md-12">
-            <ProvidersAutosuggest
-              onProviderSelected={ this.onProviderChange }
-              errMessage={ this.state.provider.errMessage }
-            />
-          </div>
+      <div className="panel panel-default">
+        <div className="panel-heading">
+          <h4 className="panel-title">Agregar producto</h4>
         </div>
-        <div className="row">
-          <div className="col-sm-8 col-md-12">
-            <div className="row">
-              <div className="col-xs-6">
-                <FormGroup
-                  label="Costo"
-                  name="purchase_price"
-                  type="text"
-                  handleChange={ this.onPurchasePriceChange }
-                  errMessage={ this.state.purchasePrice.errMessage }
-                  inpProps={{
-                    value: this.state.purchasePrice.value
-                  }}
-                />
-              </div>
-              <div className="col-xs-6">
-                <div className="form-group">
-                  <label htmlFor="inp-last_purchase_price"
-                         className="control-label">
-                    Último costo
-                  </label>
-                  <input
-                    id="inp-last_purchase_price"
-                    className="form-control"
+        <div className="panel-body">
+          <div className="row">
+            <div className="col-sm-4 col-md-12">
+              <ProductAutosuggest
+                onProductSelected={ this.onProductChange }
+                errMessage={ this.state.product.errMessage }
+              />
+            </div>
+            <div className="col-sm-4 col-md-12">
+              <FormGroup
+                label="Cantidad"
+                name="quantity"
+                type="text"
+                handleChange={ this.onQuantityChange }
+                errMessage={ this.state.quantity.errMessage }
+                inpProps={{
+                  value: this.state.quantity.value
+                }}
+              />
+            </div>
+            <div className="col-sm-4 col-md-12">
+              <ProvidersAutosuggest
+                onProviderSelected={ this.onProviderChange }
+                errMessage={ this.state.provider.errMessage }
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-sm-8 col-md-12">
+              <div className="row">
+                <div className="col-xs-6">
+                  <FormGroup
+                    label="Costo"
+                    name="purchase_price"
                     type="text"
-                    value={ this.state.lastPurchasePrice !== null
-                      ? this.state.lastPurchasePrice.price
-                      : 0
-                    }
-                    disabled
+                    handleChange={ this.onPurchasePriceChange }
+                    errMessage={ this.state.purchasePrice.errMessage }
+                    inpProps={{
+                      value: this.state.purchasePrice.value
+                    }}
                   />
+                </div>
+                <div className="col-xs-6">
+                  <div className="form-group">
+                    <label htmlFor="inp-last_purchase_price"
+                           className="control-label">
+                      Último costo
+                    </label>
+                    <input
+                      id="inp-last_purchase_price"
+                      className="form-control"
+                      type="text"
+                      value={ this.state.lastPurchasePrice !== null
+                        ? this.state.lastPurchasePrice.price
+                        : 0
+                      }
+                      disabled
+                    />
+                  </div>
                 </div>
               </div>
             </div>
+            <div className="col-sm-4 col-md-12">
+              <FormGroup
+                label="Precio venta"
+                name="sale_price"
+                type="text"
+                handleChange={ this.onSalePriceChange }
+                errMessage={ this.state.salePrice.errMessage }
+                inpProps={{
+                  value: this.state.salePrice.value
+                }}
+              />
+            </div>
           </div>
-          <div className="col-sm-4 col-md-12">
-            <FormGroup
-              label="Precio venta"
-              name="sale_price"
-              type="text"
-              handleChange={ this.onSalePriceChange }
-              errMessage={ this.state.salePrice.errMessage }
-              inpProps={{
-                value: this.state.salePrice.value
-              }}
-            />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-xs-12">
-            <button className="btn btn-primary"
-                    onClick={ this.onAddClicked }
-            >
-              <span>Agregar</span>
-            </button>
+          <div className="row">
+            <div className="col-xs-12">
+              <button className="btn btn-primary"
+                      onClick={ this.onAddClicked }
+              >
+                <span>Agregar</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -50,6 +50,12 @@ const PoSActions = {
           price
         });
       },
+      changeDate(date) {
+        PosDispatcher.dispatch({
+          type: ActionTypes.PURCHASE.CHANGE_DATE,
+          date
+        });
+      },
       changePaymentReinvestment(amount) {
         PosDispatcher.dispatch({
           type: ActionTypes.PURCHASE.CHANGE_PAYMENT_AS_REINVESTMENT,
@@ -61,6 +67,9 @@ const PoSActions = {
           type: ActionTypes.PURCHASE.CHANGE_PAYMENT_AS_INVESTMENT,
           amount: amount
         });
+      },
+      save() {
+        PosDispatcher.dispatch({ type: ActionTypes.PURCHASE.SAVE });
       }
     }
   },

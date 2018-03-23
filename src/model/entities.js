@@ -36,15 +36,14 @@ const Purchase = sequelize.define('purchase', {
     autoIncrement: true,
     primaryKey: true,
   },
-  externalPayment: {
-    field: 'external_payment',
-    type: Sequelize.BOOLEAN,
-    defaultValue: false,
-  },
-  total: {
+  reinvestment: {
     type: Sequelize.DECIMAL(13, 2),
     allowNull: false,
   },
+  investment: {
+    type: Sequelize.DECIMAL(13, 2),
+    allowNull: false
+  }
 });
 
 // noinspection JSUnresolvedVariable, JSUnresolvedFunction

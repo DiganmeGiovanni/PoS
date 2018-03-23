@@ -3,8 +3,6 @@ import FormGroup from "../components/form/FormGroup";
 import { Route } from "react-router-dom";
 import ProvidersAutosuggest from "../components/autosuggesters/ProvidersAutosuggest";
 import DValidator from "../../services/ValidatorService";
-import DatePickerInput from "react-day-picker/DayPickerInput";
-import moment from 'moment';
 
 class PurchasePricesForm extends React.Component {
   constructor(props) {
@@ -124,12 +122,6 @@ class PurchasePricesForm extends React.Component {
                 <label htmlFor="inp-date" className="control-label">Fecha</label>
 
                 <br/>
-                <DatePickerInput
-                  locale="es"
-                  inputProps={{
-                    className: 'form-control',
-                  }}
-                />
               </div>
             </div>
           </div>

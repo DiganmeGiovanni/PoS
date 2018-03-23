@@ -16,12 +16,16 @@ const FormGroup = ({ label, id, name, type, errMessage, handleChange, inpProps }
         onChange={handleChange}
         { ...inpProps }
       />;
-  const helpBlock = errMessage !== null
+  const helpBlock = errMessage !== null && errMessage !== ''
     ? <span className={'help-block'}>{errMessage}</span>
     : null;
 
+  let fgClass = 'form-group ';
+  fgClass += errMessage !== null && errMessage !== ''
+    ? 'has-error'
+    : '';
   return (
-    <div className={`form-group${errMessage !== null ? ' has-error' : ''}`}>
+    <div className={ fgClass }>
       {lbl}
       {inp}
 

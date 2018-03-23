@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
   <link rel="stylesheet" href="./../node_modules/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../node_modules/react-day-picker/lib/style.css">
+  <link rel="stylesheet" href="../node_modules/react-datetime/css/react-datetime.css">
   <link rel="stylesheet" href="./css/common.css">
   <link rel="stylesheet" href="./pos.css">
 </head>
@@ -20,11 +20,18 @@ import {AppContainer} from 'react-hot-loader';
 const render = () => {
   const App = require('./app').default;
   ReactDOM.render(<AppContainer><App /></AppContainer>, document.getElementById('App'));
-}
+};
 
 render();
 if (module.hot) {
   module.hot.accept(render);
 }
+</script>
+<script type="text/javascript">
+document.addEventListener("keydown", function (e) {
+    if (e.which === 123) {
+        require('remote').getCurrentWindow().toggleDevTools();
+    }
+});
 </script>
 </html>

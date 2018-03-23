@@ -9,7 +9,15 @@ class PurchaseCreateStore extends EventEmitter {
 
     this.state = {
       contents: [],
-      totalCost: 0
+      totalCost: 0,
+      date: new Date(),
+      paymentInvestment: 0,
+      paymentReinvestment: 0,
+      validationErrors: {
+        contents: '',
+        date: '',
+        paymentInvestment: ''
+      }
     };
   }
 
@@ -38,12 +46,49 @@ class PurchaseCreateStore extends EventEmitter {
     this.emitChange();
   }
 
+  setDate(date) {
+    this.state.date = date;
+    this.emitChange();
+  }
+
   setPaymentInvestment(amount) {
     this.state.paymentInvestment = amount;
   }
 
   setPaymentReinvestment(amount) {
     this.state.paymentReinvestment = amount;
+  }
+
+  save() {
+    if (this.validate()) {
+      // TODO Store order
+    }
+  }
+
+  validate() {
+    let formOk = true;
+
+    if (this.state.contents.length === 0) {
+      formOk = false;
+      this.state.validationErrors.contents = 'Agregue al menos un producto';
+    } else {
+      this.state.validationErrors.contents = '';
+    }
+
+    let payment = this.state.paymentInvestment;
+    payment += this.state.paymentReinvestment;
+    if (payment !== this.state.totalCost) {
+      formOk = false;
+      this.state
+        .validationErrors
+        .paymentInvestment = 'El monto pagado no coincide con el costo de la' +
+            ' compra';
+    } else {
+      this.state.validationErrors.paymentInvestment = '';
+    }
+
+    this.emitChange();
+    return formOk;
   }
 
   getState() {
@@ -72,8 +117,13 @@ storeInstance.dispatchToken = PoSDispatcher.register((action) => {
       storeInstance.setPaymentReinvestment(action.amount);
       break;
 
-    default:
-      // Do nothing
+    case ActionTypes.PURCHASE.CHANGE_DATE:
+      storeInstance.setDate(action.date);
+      break;
+
+    case ActionTypes.PURCHASE.SAVE:
+      storeInstance.save();
+      break;
   }
 });
 
