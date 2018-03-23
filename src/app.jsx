@@ -14,7 +14,7 @@ import ProvidersList from './ui/providers/ProvidersList';
 import ProvidersCreate from './ui/providers/ProvidersCreate';
 import PurchasePricesList from './ui/purchase_prices/PurchasePricesList';
 import PurchasePricesCreate from './ui/purchase_prices/PurchasePricesCreate'
-import Navbar from './ui/components/navbar/Navbar';
+import Navbar from './ui/components/navbar/PNavbar';
 import PurchasesList from "./ui/purchases/PurchasesList";
 import PurchasesCreate from "./ui/purchases/PurchasesCreate";
 
