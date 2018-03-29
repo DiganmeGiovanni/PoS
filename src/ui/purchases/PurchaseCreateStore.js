@@ -1,6 +1,8 @@
 import { EventEmitter } from 'events';
 import PoSDispatcher from '../PoSDispatcher';
 import ActionTypes from '../ActionTypes';
+import {Existence, Purchase, PurchasePrice} from "../../model/entities";
+import ProductService from '../../services/ProductService';
 
 class PurchaseCreateStore extends EventEmitter {
   constructor() {
@@ -61,8 +63,73 @@ class PurchaseCreateStore extends EventEmitter {
 
   save() {
     if (this.validate()) {
-      // TODO Store order
+      Purchase.build({
+        reinvestment: this.state.paymentReinvestment,
+        investment: this.state.paymentInvestment,
+        date: this.state.date
+      })
+      .save()
+      .then(purchase => this.saveContents(purchase))
+      .catch(err => {
+        console.error('Purchase creation has failed: ' + err);
+      });
     }
+  }
+
+  /** Register existences for each purchased product */
+  saveContents(purchase) {
+    for (let content of this.state.contents) {
+
+      // Find last purchase price
+      ProductService.lastPPrice(content.product.id, this.state.date, lastPrice => {
+        if (lastPrice === null || lastPrice.price !== content.cost) {
+          PurchasePrice.build({
+            price: content.cost,
+            measurementUnitId: 1,
+            providerId: content.provider.id,
+            productId: content.product.id,
+            date: this.state.date,
+          })
+          .save()
+          .then(purchasePrice => {
+            this.saveExistences(
+              content.product.id,
+              purchase.id,
+              purchasePrice.id,
+              content.quantity
+            );
+          });
+        } else {
+          this.saveExistences(
+            content.product.id,
+            purchase.id,
+            lastPrice.id,
+            content.quantity
+          );
+        }
+      });
+    }
+  }
+
+  /** Creates given number of existences */
+  saveExistences(productId, purchaseId, purchasePriceId, quantity) {
+    let data = [];
+    for (let i = 0; i < quantity; i++) {
+      data.push({
+        productId: productId,
+        purchaseId: purchaseId,
+        purchasePriceId: purchasePriceId
+      });
+    }
+
+    Existence
+      .bulkCreate(data)
+      .then(() => {
+        console.log(quantity + ' existences created');
+      })
+      .catch(err => {
+        console.error('Existences could not be created: ' + err);
+      });
   }
 
   validate() {

@@ -43,6 +43,10 @@ const Purchase = sequelize.define('purchase', {
   investment: {
     type: Sequelize.DECIMAL(13, 2),
     allowNull: false
+  },
+  date: {
+    type: Sequelize.DATE,
+    allowNull: false
   }
 });
 
@@ -154,6 +158,10 @@ const PurchasePrice = sequelize.define('purchase_price', {
     field: 'minimal_quantity',
     type: Sequelize.DOUBLE,
     defaultValue: 1,
+  },
+  date: {
+    type: Sequelize.DATE,
+    allowNull: false
   },
   measurementUnitId: {
     field: 'measurement_unit_id',

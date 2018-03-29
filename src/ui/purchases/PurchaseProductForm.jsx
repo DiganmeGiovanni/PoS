@@ -84,9 +84,9 @@ class PurchaseProductForm extends React.Component {
       this.props.addProduct(
         this.state.product.value,
         this.state.provider.value,
-        this.state.quantity.value,
-        this.state.purchasePrice.value,
-        this.state.salePrice.value
+        this.state.quantity.value      * 1,
+        this.state.purchasePrice.value * 1,
+        this.state.salePrice.value     * 1
       );
 
       this.cleanForm();
