@@ -2,7 +2,7 @@
 class TextFormatter {
 
   static asMoney(value) {
-    return '$' + Number(value).toFixed(2);
+    return '$ ' + Number(value).toFixed(2);
   }
 }
 

@@ -76,6 +76,15 @@ const PoSActions = {
           type: ActionTypes.PURCHASE.SET_REDIRECT_AS_COMPLETED
         });
       }
+    },
+    list: {
+      page(pageNumber, pageSize) {
+        PosDispatcher.dispatch({
+          type: ActionTypes.PURCHASE.LIST,
+          pageNumber,
+          pageSize
+        })
+      }
     }
   },
   purchasePrices: {

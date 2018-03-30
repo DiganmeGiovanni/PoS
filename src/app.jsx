@@ -15,7 +15,7 @@ import ProvidersCreate from './ui/providers/ProvidersCreate';
 import PurchasePricesList from './ui/purchase_prices/PurchasePricesList';
 import PurchasePricesCreate from './ui/purchase_prices/PurchasePricesCreate'
 import Navbar from './ui/components/navbar/PNavbar';
-import PurchasesList from "./ui/purchases/PurchasesList";
+import PurchasesList from "./ui/purchases/list/PurchasesList";
 import PurchasesCreate from "./ui/purchases/PurchasesCreate";
 
 export default class App extends React.Component {

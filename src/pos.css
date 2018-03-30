@@ -10,6 +10,10 @@ body {
 /*****************************************************/
 /** Global */
 
+td {
+  vertical-align: middle !important;
+}
+
 .cur-pointer {
     cursor: pointer;
 }
