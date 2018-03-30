@@ -17,6 +17,7 @@ import PurchasePricesCreate from './ui/purchase_prices/PurchasePricesCreate'
 import Navbar from './ui/components/navbar/PNavbar';
 import PurchasesList from "./ui/purchases/list/PurchasesList";
 import PurchasesCreate from "./ui/purchases/PurchasesCreate";
+import PurchaseView from "./ui/purchases/view/PurchaseView";
 
 export default class App extends React.Component {
   render() {
@@ -90,6 +91,12 @@ export default class App extends React.Component {
             exact
             path={'/purchases'}
             component={PurchasesList}
+            data={{ title: 'Punto de venta' }}
+          />
+          <Route
+            exact
+            path={'/purchases/:purchaseId'}
+            component={PurchaseView}
             data={{ title: 'Punto de venta' }}
           />
           <Route

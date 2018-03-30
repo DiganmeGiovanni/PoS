@@ -84,8 +84,14 @@ const PoSActions = {
           pageNumber,
           pageSize
         })
+      },
+      fetch(purchaseId) {
+        PosDispatcher.dispatch({
+          type: ActionTypes.PURCHASE.FETCH,
+          purchaseId
+        });
       }
-    }
+    },
   },
   purchasePrices: {
     fetchProductModel(pModelId) {

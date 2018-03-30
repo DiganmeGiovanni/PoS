@@ -21,6 +21,7 @@ const ActionTypes = {
     SET_REDIRECT_AS_COMPLETED: 'purchase/set_redirect_as_completed',
 
     LIST: 'purchase/list',
+    FETCH: 'purchase/fetch',
   },
   PURCHASE_PRICES: {
     FETCH_P_MODEL: 'purchase_prices/fetch_p_model'
