@@ -248,6 +248,10 @@ const Sale = sequelize.define('sale', {
     type: Sequelize.DECIMAL(13, 2),
     allowNull: false,
   },
+  date: {
+    type: Sequelize.DATE,
+    allowNull: false
+  },
 });
 
 // noinspection JSUnresolvedVariable, JSUnresolvedFunction
@@ -260,6 +264,10 @@ const SalePrice = sequelize.define('sale_price', {
   price: {
     type: Sequelize.DECIMAL(13, 2),
     allowNull: true,
+  },
+  date: {
+    type: Sequelize.DATE,
+    allowNull: false
   },
   productId: {
     field: 'product_id',

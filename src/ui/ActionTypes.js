@@ -25,6 +25,9 @@ const ActionTypes = {
   },
   PURCHASE_PRICES: {
     FETCH_P_MODEL: 'purchase_prices/fetch_p_model'
+  },
+  SALES: {
+    LIST: 'sales/list'
   }
 };
 

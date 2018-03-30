@@ -66,7 +66,12 @@ class PNavbar extends React.Component {
               to={'/purchases'}
               active={location.pathname === '/purchases'}
             >Compras</NavItem>
-            <NavItem>Ventas</NavItem>
+            <NavItem
+              componentClass={ Link }
+              href={'/sales'}
+              to={'/sales'}
+              active={location.pathname === '/sales'}
+            >Ventas</NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

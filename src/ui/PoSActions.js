@@ -100,6 +100,17 @@ const PoSActions = {
         pModelId
       });
     }
+  },
+  sales: {
+    list: {
+      page(pageNumber, pageSize) {
+        PosDispatcher.dispatch({
+          type: ActionTypes.SALES.LIST,
+          pageNumber,
+          pageSize
+        });
+      }
+    }
   }
 };
 
