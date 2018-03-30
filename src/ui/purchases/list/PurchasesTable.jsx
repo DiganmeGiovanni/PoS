@@ -39,7 +39,7 @@ const PurchasesTable = ({ purchases, activePage, totalPages, navCb}) => {
         <td className="text-center">
           <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
           <Link
-            to={`/purchases/${ purchase.id }`}
+            to={`/purchase/${ purchase.id }`}
             title="Ver contenido"
             className="btn btn-sm btn-default"
           >

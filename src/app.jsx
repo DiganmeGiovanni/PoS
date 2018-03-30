@@ -95,7 +95,7 @@ export default class App extends React.Component {
           />
           <Route
             exact
-            path={'/purchases/:purchaseId'}
+            path={'/purchase/:purchaseId'}
             component={PurchaseView}
             data={{ title: 'Punto de venta' }}
           />

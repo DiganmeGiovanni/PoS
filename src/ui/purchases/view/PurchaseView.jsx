@@ -96,7 +96,7 @@ class PurchaseView extends React.Component {
           </div>
           <div className="panel-body">
             <PurchaseContents
-              products={ this.state.products }
+              contents={ this.state.contents }
               isLoadingProducts={ this.state.isLoadingProducts }
             />
           </div>
