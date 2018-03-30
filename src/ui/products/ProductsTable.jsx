@@ -19,12 +19,17 @@ const ProductsTable = ({ products, activePage, totalPages, navCallback }) => {
       <tr key={`product-model-${ product.id }`}>
         <td>{ product.code }</td>
         <td>{ product.name }</td>
-        <td>{ product.brand.name }</td>
-        <td>{ product.measurementUnit.name }</td>
-        <td>0</td>
-        <td>{ product.minimalExistences }</td>
-        <td>
-          <Link to={`/purchase_prices/${ product.id }`} title="Precios de compra">
+        <td>{ product.brand_name }</td>
+        <td>{ product.measurement_unit_name }</td>
+        <td className="text-right">{ product.minimal_stock}</td>
+        <td className="text-right">{ product.stock }</td>
+        <td className="text-right">{ product.total_sold }</td>
+        <td className="text-center">
+          <span>&nbsp;&nbsp;&nbsp;</span>
+          <Link to={`/purchase_prices/${ product.id }`}
+                title="Precios de compra"
+                className="btn btn-sm btn-default text-center"
+          >
             <span className="glyphicon glyphicon-usd"/>
           </Link>
         </td>
@@ -42,12 +47,13 @@ const ProductsTable = ({ products, activePage, totalPages, navCallback }) => {
               <th>Nombre</th>
               <th>Marca</th>
               <th>Unidad de medida</th>
-              <th>Stock</th>
-              <th>Stock mínimo</th>
+              <th className="text-right">Stock mínimo</th>
+              <th className="text-right">Stock</th>
+              <th className="text-right">Cantidad vendida</th>
               <th>&nbsp;</th>
             </tr>
           </thead>
-          <tbody>{makeTableBody()}</tbody>
+          <tbody>{ makeTableBody() }</tbody>
         </table>
 
         <Paginator
@@ -61,7 +67,7 @@ const ProductsTable = ({ products, activePage, totalPages, navCallback }) => {
 };
 
 ProductsTable.propTypes = {
-  products: PropTypes.arrayOf(PropTypes.object).isRequired,
+  products: PropTypes.array.isRequired,
   activePage: PropTypes.number.isRequired,
   totalPages: PropTypes.number.isRequired,
   navCallback: PropTypes.func.isRequired,
