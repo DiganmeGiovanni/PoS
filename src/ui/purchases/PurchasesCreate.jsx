@@ -17,6 +17,13 @@ class PurchasesCreate extends React.Component {
     this.state = PurchaseCreateStore.getState();
   }
 
+  componentDidUpdate() {
+    if (this.state.redirectToList) {
+      PoSActions.purchase.create.setRedirectAsCompleted();
+      this.props.history.push('/purchases');
+    }
+  }
+
   componentWillMount() {
     PurchaseCreateStore.addChangeListener(this.onChange);
   }
@@ -113,6 +120,7 @@ class PurchasesCreate extends React.Component {
                   type="text"
                   handleChange={ this.onPaymentReinvestmentChange }
                   value={ `${this.state.paymentReinvestment}` }
+                  errMessage={ this.state.validationErrors.paymentInvestment }
                 />
               </div>
             </div>
@@ -120,7 +128,10 @@ class PurchasesCreate extends React.Component {
         </div>
         <div className="row">
           <div className="col-md-4">
-            <PurchaseProductForm addProduct={ this.addProduct }/>
+            <PurchaseProductForm
+              addProduct={ this.addProduct }
+              date={ this.state.date }
+            />
           </div>
 
           <div className="col-md-8">

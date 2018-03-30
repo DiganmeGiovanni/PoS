@@ -4,6 +4,7 @@ import FormGroup from "../components/form/FormGroup";
 import ProductAutosuggest from "../components/autosuggesters/ProductAutosuggest";
 import ProvidersAutosuggest from "../components/autosuggesters/ProvidersAutosuggest";
 import DValidator from "../../services/ValidatorService";
+import ProductService from '../../services/ProductService';
 
 class PurchaseProductForm extends React.Component {
   constructor(props) {
@@ -42,7 +43,7 @@ class PurchaseProductForm extends React.Component {
         value: ''
       },
 
-      lastPurchasePrice: null
+      lastPurchasePrice: 0
     };
   }
 
@@ -74,7 +75,7 @@ class PurchaseProductForm extends React.Component {
         value: ''
       },
 
-      lastPurchasePrice: null
+      lastPurchasePrice: 0
     });
   }
 
@@ -94,9 +95,17 @@ class PurchaseProductForm extends React.Component {
   }
 
   onProductChange(evt, { suggestion }) {
-    this.setState({
-      product: { value: suggestion }
-    });
+    ProductService.lastCost(suggestion.id, this.props.date)
+        .then(purchasePrice => {
+          this.setState({
+            product: { value: suggestion },
+            lastPurchasePrice: purchasePrice === null ? 0 : purchasePrice.price
+          });
+        })
+        .catch(err => {
+          console.error(err);
+          this.setState({ product: { value: suggestion }});
+        });
   }
 
   onProviderChange(evt, { suggestion }) {
@@ -242,10 +251,8 @@ class PurchaseProductForm extends React.Component {
                       id="inp-last_purchase_price"
                       className="form-control"
                       type="text"
-                      value={ this.state.lastPurchasePrice !== null
-                        ? this.state.lastPurchasePrice.price
-                        : 0
-                      }
+                      onChange={ () => {} }
+                      value={ this.state.lastPurchasePrice }
                       disabled
                     />
                   </div>
@@ -281,7 +288,8 @@ class PurchaseProductForm extends React.Component {
 }
 
 PurchaseProductForm.propTypes = {
-  addProduct: PropTypes.func.isRequired
+  addProduct: PropTypes.func.isRequired,
+  date: PropTypes.object.isRequired
 };
 
 export default PurchaseProductForm;

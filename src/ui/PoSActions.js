@@ -70,6 +70,11 @@ const PoSActions = {
       },
       save() {
         PosDispatcher.dispatch({ type: ActionTypes.PURCHASE.SAVE });
+      },
+      setRedirectAsCompleted() {
+        PosDispatcher.dispatch({
+          type: ActionTypes.PURCHASE.SET_REDIRECT_AS_COMPLETED
+        });
       }
     }
   },

@@ -18,6 +18,7 @@ const ActionTypes = {
     CHANGE_PAYMENT_AS_INVESTMENT: 'purchase/change_investment',
     CHANGE_DATE: 'purchase/change_date',
     SAVE: 'purchase/save',
+    SET_REDIRECT_AS_COMPLETED: 'purchase/set_redirect_as_completed'
   },
   PURCHASE_PRICES: {
     FETCH_P_MODEL: 'purchase_prices/fetch_p_model'

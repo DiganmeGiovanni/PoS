@@ -3,6 +3,7 @@ import PoSDispatcher from '../PoSDispatcher';
 import ActionTypes from '../ActionTypes';
 import {Existence, Purchase, PurchasePrice} from "../../model/entities";
 import ProductService from '../../services/ProductService';
+import sequelize from '../../model/database';
 
 class PurchaseCreateStore extends EventEmitter {
   constructor() {
@@ -19,7 +20,11 @@ class PurchaseCreateStore extends EventEmitter {
         contents: '',
         date: '',
         paymentInvestment: ''
-      }
+      },
+
+      // This is used after purchase has been saved successfully to inform
+      // to component that should redirect to purchases list
+      redirectToList: false
     };
   }
 
@@ -33,6 +38,25 @@ class PurchaseCreateStore extends EventEmitter {
 
   removeChangeListener(callback) {
     this.removeListener(this.CHANGE_EVENT, callback);
+  }
+
+  reset(redirectToList) {
+    this.state = {
+      contents: [],
+      totalCost: 0,
+      date: new Date(),
+      paymentInvestment: 0,
+      paymentReinvestment: 0,
+      validationErrors: {
+        contents: '',
+        date: '',
+        paymentInvestment: ''
+      },
+
+      redirectToList: redirectToList
+    };
+
+    this.emitChange();
   }
 
   addProduct(product, provider, quantity, cost, price) {
@@ -61,58 +85,93 @@ class PurchaseCreateStore extends EventEmitter {
     this.state.paymentReinvestment = amount;
   }
 
+  setRedirectAsCompleted() {
+    this.state.redirectToList = false;
+  }
+
   save() {
     if (this.validate()) {
-      Purchase.build({
-        reinvestment: this.state.paymentReinvestment,
-        investment: this.state.paymentInvestment,
-        date: this.state.date
+
+      // Save purchase on transaction
+      sequelize.transaction(transaction => {
+        let purchaseData = {
+          reinvestment: this.state.paymentReinvestment,
+          investment: this.state.paymentInvestment,
+          date: this.state.date
+        };
+
+        return Purchase.create(purchaseData, { transaction: transaction })
+            .then(purchase => {
+              return this.saveContents(purchase, transaction);
+            });
       })
-      .save()
-      .then(purchase => this.saveContents(purchase))
+      .then(() => {
+        this.reset(true);
+      })
       .catch(err => {
-        console.error('Purchase creation has failed: ' + err);
+        console.error('Purchase could not be stored: ' + err);
       });
     }
   }
 
   /** Register existences for each purchased product */
-  saveContents(purchase) {
+  saveContents(purchase, transaction) {
+    let promises = [];
+
     for (let content of this.state.contents) {
 
       // Find last purchase price
-      ProductService.lastPPrice(content.product.id, this.state.date, lastPrice => {
-        if (lastPrice === null || lastPrice.price !== content.cost) {
-          PurchasePrice.build({
-            price: content.cost,
-            measurementUnitId: 1,
-            providerId: content.provider.id,
-            productId: content.product.id,
-            date: this.state.date,
-          })
-          .save()
-          .then(purchasePrice => {
-            this.saveExistences(
-              content.product.id,
-              purchase.id,
-              purchasePrice.id,
-              content.quantity
-            );
-          });
-        } else {
-          this.saveExistences(
+      let promise = ProductService
+          .lastProviderPrice(
             content.product.id,
-            purchase.id,
-            lastPrice.id,
-            content.quantity
-          );
-        }
-      });
+            content.provider.id,
+            this.state.date
+          )
+          .then(lastPrice => {
+
+            // Create new purchase price
+            if (lastPrice === null || lastPrice.price !== content.cost) {
+              let purchasePrice = {
+                price: content.cost,
+                measurementUnitId: 1,
+                providerId: content.provider.id,
+                productId: content.product.id,
+                date: this.state.date
+              };
+
+              return PurchasePrice.create(purchasePrice, { transaction: transaction })
+                .then(purchasePrice => {
+                  return this.saveExistences(
+                    content.product.id,
+                    purchase.id,
+                    purchasePrice.id,
+                    content.quantity,
+                    transaction
+                  );
+                });
+            }
+
+            // Use existing purchase price
+            else {
+              return this.saveExistences(
+                content.product.id,
+                purchase.id,
+                lastPrice.id,
+                content.quantity,
+                transaction
+              );
+            }
+          });
+
+      promises.push(promise);
     }
+
+    return Promise.all(promises);
   }
 
+  // noinspection JSMethodCanBeStatic
   /** Creates given number of existences */
-  saveExistences(productId, purchaseId, purchasePriceId, quantity) {
+  saveExistences(productId, purchaseId, purchasePriceId, quantity, transaction) {
     let data = [];
     for (let i = 0; i < quantity; i++) {
       data.push({
@@ -122,14 +181,7 @@ class PurchaseCreateStore extends EventEmitter {
       });
     }
 
-    Existence
-      .bulkCreate(data)
-      .then(() => {
-        console.log(quantity + ' existences created');
-      })
-      .catch(err => {
-        console.error('Existences could not be created: ' + err);
-      });
+    return Existence.bulkCreate(data, { transaction: transaction });
   }
 
   validate() {
@@ -190,6 +242,10 @@ storeInstance.dispatchToken = PoSDispatcher.register((action) => {
 
     case ActionTypes.PURCHASE.SAVE:
       storeInstance.save();
+      break;
+
+    case ActionTypes.PURCHASE.SET_REDIRECT_AS_COMPLETED:
+      storeInstance.setRedirectAsCompleted();
       break;
   }
 });
