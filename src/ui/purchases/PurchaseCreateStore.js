@@ -1,7 +1,12 @@
 import { EventEmitter } from 'events';
 import PoSDispatcher from '../PoSDispatcher';
 import ActionTypes from '../ActionTypes';
-import {Existence, Purchase, PurchasePrice} from "../../model/entities";
+import {
+  Existence,
+  Purchase,
+  PurchasePrice,
+  SalePrice
+} from "../../model/entities";
 import ProductService from '../../services/ProductService';
 import sequelize from '../../model/database';
 
@@ -163,7 +168,28 @@ class PurchaseCreateStore extends EventEmitter {
             }
           });
 
+      // Upsert sale price
+      let salePricePromise = ProductService
+        .lastPrice(content.product.id, this.state.date)
+        .then(lastPrice => {
+          if (lastPrice === null || lastPrice.price !== content.price) {
+            let salePrice = {
+              productId: content.product.id,
+              price: content.price,
+              date: this.state.date
+            };
+
+            return SalePrice.create(salePrice, { transaction: transaction });
+          }
+
+          // Sale price is already updated
+          else {
+            return Promise.resolve('Sale price reused');
+          }
+        });
+
       promises.push(promise);
+      promises.push(salePricePromise);
     }
 
     return Promise.all(promises);
