@@ -102,12 +102,51 @@ const PoSActions = {
     }
   },
   sales: {
+    create: {
+      addProduct(product, quantity, price) {
+        PosDispatcher.dispatch({
+          type: ActionTypes.SALES.ADD_CONTENT,
+          product,
+          quantity,
+          price
+        });
+      },
+      changeDate(date) {
+        PosDispatcher.dispatch({
+          type: ActionTypes.SALES.CHANGE_DATE,
+          date
+        });
+      },
+      changeSelfConsumption(selfConsumption) {
+        PosDispatcher.dispatch({
+          type: ActionTypes.SALES.CHANGE_SELF_CONSUMPTION,
+          selfConsumption
+        });
+      },
+      save() {
+        PosDispatcher.dispatch({
+          type: ActionTypes.SALES.SAVE
+        });
+      },
+
+      setRedirectAsCompleted() {
+        PosDispatcher.dispatch({
+          type: ActionTypes.SALES.SET_REDIRECT_AS_COMPLETED
+        });
+      }
+    },
     list: {
       page(pageNumber, pageSize) {
         PosDispatcher.dispatch({
           type: ActionTypes.SALES.LIST,
           pageNumber,
           pageSize
+        });
+      },
+      fetch(saleId) {
+        PosDispatcher.dispatch({
+          type: ActionTypes.SALES.FETCH,
+          saleId
         });
       }
     }
