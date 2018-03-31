@@ -20,6 +20,7 @@ import PurchasesCreate from "./ui/purchases/PurchasesCreate";
 import PurchaseView from "./ui/purchases/view/PurchaseView";
 import SalesList from "./ui/sales/list/SalesList";
 import SaleCreate from "./ui/sales/form/SaleCreate";
+import SaleView from "./ui/sales/view/SaleView";
 
 export default class App extends React.Component {
   render() {
@@ -112,6 +113,12 @@ export default class App extends React.Component {
             exact
             path={'/sales'}
             component={ SalesList }
+            data={{ title: 'Punto de venta' }}
+          />
+          <Route
+            exact
+            path={'/sale/:saleId'}
+            component={ SaleView }
             data={{ title: 'Punto de venta' }}
           />
           <Route
