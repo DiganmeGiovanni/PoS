@@ -7,6 +7,7 @@ const ActionTypes = {
   },
   PRODUCTS: {
     PAGE: 'products/page',
+    SET_END_DATE: 'products/set_end_date'
   },
   PROVIDERS: {
     LIST: 'providers/list',

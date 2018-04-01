@@ -28,6 +28,12 @@ const PoSActions = {
         pageSize,
       });
     },
+    setEndDate(endDate) {
+      PosDispatcher.dispatch({
+        type: ActionTypes.PRODUCTS.SET_END_DATE,
+        endDate
+      });
+    }
   },
   provider: {
     page(pageNumber, pageSize) {

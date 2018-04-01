@@ -28,7 +28,7 @@ const ProductsTable = ({ products, activePage, totalPages, navCallback }) => {
           <span>&nbsp;&nbsp;&nbsp;</span>
           <Link to={`/purchase_prices/${ product.id }`}
                 title="Precios de compra"
-                className="btn btn-sm btn-default text-center"
+                className="btn btn-sm btn-default text-center hidden"
           >
             <span className="glyphicon glyphicon-usd"/>
           </Link>

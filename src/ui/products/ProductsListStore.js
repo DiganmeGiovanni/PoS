@@ -13,6 +13,8 @@ class ProductsListStore extends EventEmitter {
       products: [],
       pageIdx: 0,
       pagesCount: 0,
+
+      endDate: new Date(),
     };
   }
 
@@ -26,6 +28,11 @@ class ProductsListStore extends EventEmitter {
 
   removeChangeListener(callback) {
     this.removeListener(this.CHANGE_EVENT, callback);
+  }
+
+  setEndDate(date) {
+    this.activePage.endDate = date;
+    this.page(this.activePage.pageIdx, 20);
   }
 
   page(pageNumber, pageSize) {
@@ -123,6 +130,10 @@ storeInstance.dispatchToken = PoSDispatcher.register((action) => {
   switch (action.type) {
     case ActionTypes.PRODUCTS.PAGE:
       storeInstance.page(action.pageNumber, action.pageSize);
+      break;
+
+    case ActionTypes.PRODUCTS.SET_END_DATE:
+      storeInstance.setEndDate(action.endDate);
       break;
   }
 });
