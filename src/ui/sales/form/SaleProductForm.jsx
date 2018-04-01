@@ -92,13 +92,23 @@ class SaleProductForm extends React.Component {
   onAddClicked(e) {
     e.preventDefault();
     if (this.validate()) {
-      this.props.addProduct(
-        this.state.product.value,
-        this.state.quantity.value  * 1,
-        this.state.salePrice.value * 1
-      );
 
-      this.setState(this.makeInitialState());
+      // Validate available stock
+      ProductService.stockCount(this.state.product.value.id, this.props.date)
+        .then(products => {
+          this.state.stock = products[0].stock;
+
+          if (this.validateQuantity()) {
+            this.props.addProduct(
+              this.state.product.value,
+              this.state.quantity.value  * 1,
+              this.state.salePrice.value * 1
+            );
+
+            this.setState(this.makeInitialState());
+          }
+        })
+        .catch(err => { console.error(err); });
     }
   }
 
@@ -148,6 +158,7 @@ class SaleProductForm extends React.Component {
     else {
       let qty = this.state.quantity.value * 1;
       if (qty > this.state.stock) {
+        formOk = false;
         this.setState({
           quantity: {
             hasError: true,

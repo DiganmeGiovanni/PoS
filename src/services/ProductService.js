@@ -1,5 +1,6 @@
 import { Product, PurchasePrice, SalePrice } from '../model/entities';
 import sequelize from '../model/database';
+import moment from 'moment';
 const Sequelize = require('sequelize');
 
 class ProductService {
@@ -105,36 +106,23 @@ class ProductService {
     let sql = '\
       SELECT\
         PROD.id,\
-        PROD.name,\
-        IFNULL(EXIS.total - EXIS.sold, 0) AS stock,\
-        IFNULL(EXIS.sold, 0)              AS total_sold\
-      FROM product PROD\
-      INNER JOIN brand BRA\
-        ON BRA.id = PROD.brand_id\
-      INNER JOIN measurement_unit MU\
-        ON MU.id = PROD.measurement_unit_id\
-      LEFT JOIN (\
-            SELECT\
-              product_id,\
-              SUM(IFNULL(SHE.id, 0)) AS sold,\
-              COUNT(*)               AS total\
-            FROM existence EXI\
-            LEFT JOIN sale_has_existence SHE\
-                ON EXI.id = SHE.existence_id\
-            INNER JOIN purchase PUR\
-              ON PUR.id = EXI.purchase_id\
-            WHERE PUR.date <= :date\
-            GROUP BY product_id\
-        ) EXIS\
-        ON EXIS.product_id = PROD.id\
-      WHERE PROD.id = :productId\
-      LIMIT 1\
+        COUNT(*) AS stock\
+      FROM existence EXI\
+      INNER JOIN purchase PUR\
+        ON PUR.id = EXI.purchase_id\
+      INNER JOIN product PROD\
+        ON PROD.id = EXI.product_id\
+      LEFT JOIN sale_has_existence SHE\
+        ON SHE.existence_id = EXI.id\
+      WHERE SHE.id IS NULL\
+        AND PUR.date <= :date\
+        AND PROD.id = :productId\
     ';
 
     let promise = sequelize.query(sql, {
         type: Sequelize.QueryTypes.SELECT,
         replacements: {
-          date: date,
+          date: moment(date).utc().format('YYYY-MM-DD HH:mm:ss'),
           productId: productId
         }
     });
@@ -153,20 +141,28 @@ class ProductService {
   availableExistences(productId, quantity, date, cb) {
     let sql = '\
       SELECT\
-        product_id,\
-        EXI.id AS existence_id\
+        EXI.id AS existence_id,\
+        EXI.product_id\
       FROM existence EXI\
       INNER JOIN purchase PUR\
-      ON PUR.id = EXI.purchase_id\
+        ON PUR.id = EXI.purchase_id\
+      INNER JOIN product PROD\
+        ON PROD.id = EXI.product_id\
       LEFT JOIN sale_has_existence SHE\
-        ON EXI.id = SHE.existence_id\
-      WHERE PUR.date <= :date\
+        ON SHE.existence_id = EXI.id\
+      WHERE SHE.id IS NULL\
+        AND PUR.date <= :date\
+        AND PROD.id = :productId\
       LIMIT :quantity\
     ';
 
     let promise = sequelize.query(sql, {
       type: Sequelize.QueryTypes.SELECT,
-      replacements: { date: date, quantity: quantity }
+      replacements: {
+        date: moment(date).utc().format('YYYY-MM-DD HH:mm:ss'),
+        productId: productId,
+        quantity: quantity
+      }
     });
 
     if (typeof cb !== "undefined") {

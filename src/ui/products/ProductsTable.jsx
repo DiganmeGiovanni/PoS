@@ -21,9 +21,9 @@ const ProductsTable = ({ products, activePage, totalPages, navCallback }) => {
         <td>{ product.name }</td>
         <td>{ product.brand_name }</td>
         <td>{ product.measurement_unit_name }</td>
-        <td className="text-right">{ product.minimal_stock}</td>
+        <td className="text-right">{ product.minimal_existences }</td>
         <td className="text-right">{ product.stock }</td>
-        <td className="text-right">{ product.total_sold }</td>
+        <td className="text-right">{ product.sold }</td>
         <td className="text-center">
           <span>&nbsp;&nbsp;&nbsp;</span>
           <Link to={`/purchase_prices/${ product.id }`}
