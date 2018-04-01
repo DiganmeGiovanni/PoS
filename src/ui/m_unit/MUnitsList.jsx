@@ -19,6 +19,7 @@ class MUnitsList extends React.Component {
   }
 
   componentDidMount() {
+    document.title = 'Unidades de medida';
     PoSActions.measurementUnits.page(1, this.pageSize);
   }
 

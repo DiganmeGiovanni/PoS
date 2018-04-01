@@ -25,7 +25,7 @@ const BrandsTable = ({ brands, activePage, totalPages, navCallback }) => {
   return (
     <div className="row">
       <div className="col-xs-12">
-        <table className="table table-bordered table-striped">
+        <table className="table table-striped">
           <thead>
             <tr>
               <th>#</th>

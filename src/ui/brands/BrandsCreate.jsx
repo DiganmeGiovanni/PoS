@@ -12,6 +12,10 @@ class BrandsCreate extends React.Component {
     };
   }
 
+  componentDidMount() {
+    document.title = 'Registrar marca';
+  }
+
   onSubmit(brand, history) {
     brand.save().then(() => {
       this.setState({

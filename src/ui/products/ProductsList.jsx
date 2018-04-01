@@ -23,6 +23,7 @@ class ProductsList extends React.Component {
   }
 
   componentDidMount() {
+    document.title = 'Productos';
     PoSActions.products.page(1, this.pageSize);
   }
 

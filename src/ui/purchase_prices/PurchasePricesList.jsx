@@ -17,6 +17,7 @@ class PurchasePricesList extends React.Component {
   }
 
   componentDidMount() {
+    document.title = 'Precios de compra';
     PoSActions.purchasePrices.fetchProductModel(this.pModelId);
   }
 

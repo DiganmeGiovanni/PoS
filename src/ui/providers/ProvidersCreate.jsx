@@ -12,6 +12,10 @@ class ProvidersCreate extends React.Component {
     };
   }
 
+  componentDidMount() {
+    document.title = 'Registrar proveedor';
+  }
+
   onSubmit(provider, history) {
     provider.save().then(() => {
       this.setState({

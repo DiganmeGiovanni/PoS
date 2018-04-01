@@ -12,6 +12,10 @@ class MUnitsCreate extends React.Component {
     };
   }
 
+  componentDidMount() {
+    document.title = 'Registrar unidad de medida';
+  }
+
   onSubmit(mUnit, history) {
     mUnit.save().then(() => {
       this.setState({

@@ -13,6 +13,10 @@ class SaleCreate extends React.Component {
     this.state = SaleCreateStore.getState();
   }
 
+  componentDidMount() {
+    document.title = 'Registrar venta';
+  }
+
   componentDidUpdate() {
     if (this.state.redirectToList) {
       PoSActions.sales.create.setRedirectAsCompleted();

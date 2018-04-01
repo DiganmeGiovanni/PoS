@@ -17,6 +17,10 @@ class PurchasesCreate extends React.Component {
     this.state = PurchaseCreateStore.getState();
   }
 
+  componentDidMount() {
+    document.title = 'Registrar compra';
+  }
+
   componentDidUpdate() {
     if (this.state.redirectToList) {
       PoSActions.purchase.create.setRedirectAsCompleted();

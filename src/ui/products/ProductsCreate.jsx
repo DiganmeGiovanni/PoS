@@ -12,6 +12,10 @@ class ProductsCreate extends React.Component {
     };
   }
 
+  componentDidMount() {
+    document.title = 'Registrar producto';
+  }
+
   onSubmit(product, history) {
     product.save().then(() => {
       this.setState({ product: product });

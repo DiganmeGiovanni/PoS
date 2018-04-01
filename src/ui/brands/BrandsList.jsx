@@ -19,6 +19,7 @@ class BrandsList extends React.Component {
   }
 
   componentDidMount() {
+    document.title = 'Marcas';
     PoSActions.brands.page(1, this.pageSize);
   }
 

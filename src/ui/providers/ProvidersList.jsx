@@ -19,6 +19,7 @@ class ProvidersList extends React.Component {
   }
 
   componentDidMount() {
+    document.title = 'Proveedores';
     PoSActions.provider.page(1, this.pageSize);
   }
 
