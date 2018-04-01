@@ -21,6 +21,7 @@ import PurchaseView from "./ui/purchases/view/PurchaseView";
 import SalesList from "./ui/sales/list/SalesList";
 import SaleCreate from "./ui/sales/form/SaleCreate";
 import SaleView from "./ui/sales/view/SaleView";
+import Welcome from "./ui/home/Welcome";
 
 export default class App extends React.Component {
   render() {
@@ -30,6 +31,13 @@ export default class App extends React.Component {
           <Navbar />
 
           {/* Routes */}
+          <Route
+            exact
+            path={'/'}
+            component={Welcome}
+            data={{ title: 'Punto de venta' }}
+          />
+
           <Route
             exact
             path={'/brands'}
